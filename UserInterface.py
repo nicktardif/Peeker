@@ -12,7 +12,7 @@ class UserInterface:
             'help'      :self.help, 
             'status'    :self.cli.status,
             'exit'      :sys.exit, 
-            'search'    :sys.exit, 
+            'search'    :self.cli.search, 
             'logout'    :self.logout, 
             'location'  :sys.exit }
             #'view'      :sys.exit }
@@ -23,13 +23,19 @@ class UserInterface:
     def inputCommand(self):
         print "\n---Enter a command---"
         command = raw_input("") 
+        commandArgs = command.split(' ')
         
         # Checks for valid input, and then executes appropriate code
         try:
-            self.commandFunctions[command]()
+            if (commandArgs[0] == "search"):
+                self.cli.search(commandArgs[1], commandArgs[2])
+            else:
+                self.commandFunctions[command]()
         # If input is invalid, displays error
         except KeyError:
-            self.displayInvalidCommand(command)
+            print "* \"" + command + "\" is not a valid command, try again"
+        #except TypeError:
+        #    print "* Wrong number of input arguments, try again"
 
         # Allows for next command to be inputted
         self.inputCommand()
@@ -49,9 +55,6 @@ class UserInterface:
         self.cli.setUsername(None)
         self.cli.setPassword(None)
         print "* You are successfully logged out"
-
-    def displayInvalidCommand(self, command):
-        print "* \"" + command + "\" is not a valid command, try again"
 
     def help(self):
         print "\nAvailable Commands"
