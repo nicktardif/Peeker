@@ -22,7 +22,13 @@ class UserInterface:
 
     def inputCommand(self):
         print "\n---Enter a command---"
-        command = raw_input("") 
+        try:
+            command = raw_input("") 
+        except KeyboardInterrupt:   #handles ^C input
+            sys.exit()
+        except EOFError:            #handles ^D input
+            sys.exit()
+
         commandArgs = command.split(' ')
         
         # Checks for valid input, and then executes appropriate code
@@ -34,8 +40,8 @@ class UserInterface:
         # If input is invalid, displays error
         except KeyError:
             print "* \"" + command + "\" is not a valid command, try again"
-        #except TypeError:
-        #    print "* Wrong number of input arguments, try again"
+        except TypeError:
+            print "* Wrong number of input arguments, try again"
 
         # Allows for next command to be inputted
         self.inputCommand()
