@@ -26,5 +26,6 @@ class Item:
         else:
             self.price = priceHTML.text.encode('utf-8')
 
-    def __str__(self):
-        return self.date + ' // ' + self.price + ' // ' + self.name
+    def __str__(self): 
+        return "{0} // {1:{2}} // {3}".format(self.date, self.price, 6, self.name)
+        #return self.date + ' // ' + self.price + ' // ' + self.name

@@ -39,7 +39,8 @@ class CLInterface:
         i = 1
         for html in allItems:
             item = Item(html)
-            print str(i) + '. ' + str(item)
+            #print str(i) + '. ' + str(item)
+            print("{0:{1}} {2}".format(str(i)+".", 4, str(item)))
             i = i + 1
     def status(self):
         print "Username: " + str(self.username)
