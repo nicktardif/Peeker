@@ -17,6 +17,7 @@ class UserInterface:
             'location'  :self.locationSet }
             #'view'      :sys.exit }
         # TODO use saved settings?
+
         self.inputCommand()
 
 
@@ -112,10 +113,35 @@ class UserInterface:
         print "* Location successfully set to " + locationCode
 
     def search(self, category, query):
+        # Get itemList
         itemList = self.cli.search(category, query) 
-        for item in itemList:
+
+        self.displaySearchResults(itemList, 0)
+
+    def displaySearchResults(self, itemList, startNum):
+        RESULTS_PER_PAGE = 30
+        # Display items
+        for item in itemList[startNum:startNum + RESULTS_PER_PAGE]:
             print item
-        
+         
+        # Prompt for input (previous,next,detail)
+        nextCommand = ""
+        while (True):
+            nextCommand = raw_input("* View previous, next, detail, or back?\n")
+            if (nextCommand == 'next'):
+               self.displaySearchResults(itemList, startNum + RESULTS_PER_PAGE) 
+            elif (nextCommand == 'previous'):
+               self.displaySearchResults(itemList, startNum - RESULTS_PER_PAGE) 
+            elif (nextCommand == 'detail'):
+               print "DETAILS" 
+            elif (nextCommand == 'back'):
+                break
+            else:
+                print "Command not valid, try again?"
+
+        self.inputCommand() 
+
+
 
     def help(self):
         print "\nAvailable Commands"
