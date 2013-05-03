@@ -82,11 +82,12 @@ class CLInterface:
         locationList = []
         locations = []
         print "region is " + region
-        # again, unnecessary for loop
+        # Retrieves the locations 
         for section in regionLinks:
             if (section.text == region):
                 locations = section.find_next('ul').find_all('li')
                 break
+        # Parses the locations
         for location in locations:
                 locationList.append(str(location.find_next('a')['href'] + ',' + str(location.text)))
 

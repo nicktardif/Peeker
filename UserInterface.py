@@ -34,15 +34,19 @@ class UserInterface:
         # Checks for valid input, and then executes appropriate code
         try:
             if (commandArgs[0] == "search"):
-                self.search(commandArgs[1], commandArgs[2])
+                # Combine query args into one
+                query = ""
+                for i in range(len(commandArgs)-2):
+                    query = query + " " + commandArgs[i + 2]
+                self.search(commandArgs[1], query)
             else:
                 self.commandFunctions[command]()
         # If input is invalid, displays error
         except KeyError:
             print "* \"" + command + "\" is not a valid command, try again"
     
-        #except TypeError:
-            #print "* Wrong number of input arguments, try again"
+        except TypeError:
+            print "* Wrong number of input arguments, try again"
 
         # Allows for next command to be inputted
         self.inputCommand()
